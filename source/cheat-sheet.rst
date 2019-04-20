@@ -1,7 +1,7 @@
 .. _cheat-sheet:
 
-Cheat Sheet
-===========
+Restructured Text (reST) and Sphinx CheatSheet
+==============================================
 
 Be sure to give a title to each page.  For example, this page is called **Cheat Sheet**.  When linking to this page, the title text appears as the title of the document.
 
@@ -40,6 +40,29 @@ Be sure to give a title to each page.  For example, this page is called **Cheat 
 * For multi-worded links, `define them like this`_.
 * Define links inline `like this <http://www.python.org>`_.
 * This is a implicit link to an existing document `cheat-sheet`_
+
+=============
+Section Title
+=============
+
+-------------
+Section Title
+-------------
+
+Section Title
+=============
+
+Section Title
+-------------
+
+Section Title
+`````````````
+
+Section Title
+'''''''''''''
+
+Section Title
+.............
 
 This is a line with a footnote.\ [#label]_
 

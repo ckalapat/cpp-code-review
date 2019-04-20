@@ -1,8 +1,8 @@
 Rules
 =====
 
-Rule 1 - Header guards should contain the fully-qualified case-sentive class name
----------------------------------------------------------------------------------
+Rule - Header guards should contain the fully-qualified case-sentive class name
+-------------------------------------------------------------------------------
 
 When writing guards in your header files, consider using the following format
 
@@ -46,8 +46,8 @@ For Example (file src/acme/shared/OrderProcessing.h).  If a developer copy-paste
     #endif // __acme_shared_OrderProcessing_h 
 
 
-Rule 2 - Namespace names should be lowercase and class names should be Pascal Case
-----------------------------------------------------------------------------------
+Rule - Namespace names should be lowercase and class names should be Pascal Case
+--------------------------------------------------------------------------------
 
 Namespace names should only contain lowercase characters and classes should be Pascal Case
 
@@ -75,8 +75,8 @@ For Example (file src/aws/s3/S3Object.h):
     } // namespace aws
 
 
-Rule 3 - Namespace names should follow a very specific format
--------------------------------------------------------------
+Rule - Namespace names should follow a very specific format
+-----------------------------------------------------------
 
 To be consistent with others, consider adopting a common namespacing format.  Each namespace endpoint (the point before a class exists) should be its own entity that contains a set of functions or classes that are exported and used in a module, library or product.
 
@@ -125,8 +125,8 @@ Bad Names:
     IBM::Watson::api // namespace should only contain lowercase
 
 
-Rule 4 - Enums should have a very specific format
--------------------------------------------------
+Rule - Enums should have a very specific format
+-----------------------------------------------
 
 Consider the specific enum format:
 
@@ -139,8 +139,8 @@ Consider the specific enum format:
     <company><product><module>
 
 
-Rule 5 - Have 'if' statements check for error conditions and throw and never check positive (good) conditions
--------------------------------------------------------------------------------------------------------------
+Rule - Have 'if' statements check for error conditions and throw and never check positive (good) conditions
+-----------------------------------------------------------------------------------------------------------
 
 :Why:
 
@@ -189,8 +189,8 @@ A better implementation
     }
 
 
-Rule 6 - Prefer const reference inputs have ampersand after type
-----------------------------------------------------------------
+Rule - Prefer const reference inputs have ampersand after type
+--------------------------------------------------------------
 
 Yes
 std::string trim(const std::string& input);
@@ -214,18 +214,46 @@ When assighing variable names, consider the follwoing scheme
 * for-loop variables prefixed with the word "each".  for (const std::string& eachPath in pathList)
 * boolean variables imply true/false relationship: isEnabled, enabled, 
 
+Rule - Include a unit of measurement in variable/function names where applicable
+--------------------------------------------------------------------------------
+
+:Why:
+
+* A common source of bugs is when developers use your API and make a simple mistake in interpreting a variable
+
+Consider the following variable names (don't do this)
+
+Bad variable names
+
+.. code-block:: cpp
+
+    int weight; // BAD - How heavy
+    long timeout; // BAD - How long is timeout
+    long startTime; // BAD - Start time since when?
+
+Good variable names
+
+.. code-block:: cpp
+
+    int weightInLbs;
+    long timeoutInMs;
+    long startTimeSince1970;
+
 Rule 8 - Beware of shortening variable names
 --------------------------------------------
 
 :Why:
 
-What is obvious to you is probbaly not obvious to others
+* Short names can confuse other developers
+* What is obvious to you is probably not obvious to others
+* Good names are easy to debug and maintain.  Bad names are difficult to read and debug
 
 .. code-block:: cpp
     :linenos:
 
     ms = GetTimeout(); // Not obvious what 'ms' is.  Ambiguity can lead to bugs.
     mSecs = GetTimeout(); // Does mSec mean milli seconds, micro seconds, or is it a member variale called Secs?
+    pTree = GetPTree();  // That is PTree?  A pointer to a tree?  A property tree?  Something else?
 
 A better implementation
 
@@ -233,6 +261,41 @@ A better implementation
     :linenos:
 
     milliSeconds = GetTimeoutInMs();
+    propertyTree = GetPropertyTree();
+
+Rule - Preprocessor macros are not replacements for functions
+-------------------------------------------------------------
+
+Signs you are violating this rule
+
+* You declare a variable in your macro
+* You return a declared variable from a macro
+* You have multiple if statements, complex loops, in your macro
+* You have 3 or more lines of code in your macro
+
+:Why:
+
+* Multi-line macros that are complex are error-prone
+* Multi-line macros bloat executable size because you don't take advantage of code reuse via inline functions
+* Multi-line macros are difficult to debug and for tools to process.
+
+If you have to write multi macros, be sure to
+
+* isoloate each macro parameter
+* isolate macro difinition inside a do/while(0) loop
+
+Rule - Isolate multi-line macros inside a do/while loop
+-------------------------------------------------------
+
+
+
+Rule - Consider not using preprocssors
+--------------------------------------
+
+do while
+brackets
+
+Rule - 
 
 Rule 9 - Consider making 0 value in enum an invalid/unknown/unset/null/none value
 ---------------------------------------------------------------------------------
