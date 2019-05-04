@@ -1,8 +1,62 @@
 Rules
 =====
 
-Rule - Header guards should contain the fully-qualified case-sentive class name
--------------------------------------------------------------------------------
+Rule - When writing code, focus on debugability
+-----------------------------------------------
+
+When writing code, think of other developers looking and maintaining your code.
+
+* Developers maintaining your code should be able to debug your code
+* The harder it is to set a breakpoint, the longer it takes to fix a problem
+* Don't write one-line `if` statements.  They impair readability and are hard to debug by setting breakpoints
+* Be careful when putting too much logic on a single lile.  It makes commenting difficult and is hard to understand.
+
+:Bad:
+
+.. code-block:: cpp
+    :linenos:
+
+    void Database::initialize(const std::string& userName)
+    {
+        if (isInitiliazed()) return;
+        m_dbHandle.init(m_cache.search(m_usersPool.getId(userName)));
+    }
+
+:Good:
+
+.. code-block:: cpp
+    :linenos:
+
+    void Database::initialize(const std::string& userName)
+    {
+        if (isInitiliazed()) {
+            return; // noop, already initiliazed
+        }
+        const std::string& id = m_usersPool.getId(userName);
+        const CacheItem& cacheItem = m_cache.search(id);
+        m_dbHandle.init(cacheItem);
+    }
+
+:Why:
+
+* Setting a breakpoint on multiple initilization calls is easy
+* When a breakpoint is triggered, it's easy to look at the local variables
+* Setting a conditional breakpoint is easier: break if cacheItem.isValid() == false
+
+
+Rule - Prefer using exceptions
+------------------------------
+
+When should you throw?  When something exceptional occurs, but what does this mean?  It means you should throw when you cannot fulfil the functional contract because of an encountered error.  Think of exceptions as runtime release-mode asserts.
+
+:Why:
+
+* Don't fight language.  C++ is an exception-based language.
+* Be careful not to mix exceptions with error codes.  They are not the same thing.
+
+
+Rule - Consider using case-sentive names instead of uppercase names in header guards
+------------------------------------------------------------------------------------
 
 When writing guards in your header files, consider using the following format
 
@@ -139,8 +193,8 @@ Consider the specific enum format:
     <company><product><module>
 
 
-Rule - Have 'if' statements check for error conditions and throw and never check positive (good) conditions
------------------------------------------------------------------------------------------------------------
+Rule - Have 'if' statements check for error conditions and throw but never check positive (nominal) conditions
+--------------------------------------------------------------------------------------------------------------
 
 :Why:
 
@@ -148,7 +202,7 @@ Rule - Have 'if' statements check for error conditions and throw and never check
 * Throwing an exception on error conditions makes code more correct
 * Code that checks for positive conditions usually miss and 'else' condition, which is the error condition, indicating a bug
 
-Can you spot the error here?
+Can you spot the errors here?
 
 .. code-block:: cpp
     :linenos:
@@ -164,7 +218,7 @@ Can you spot the error here?
         }
     }
 
-Bugs
+:Bugs:
 
 * A noop occurs when userName is empty
 * A noop occurs when m_sessionMap is not initialized
@@ -203,16 +257,28 @@ std::string trim(const std::string &input); // ampersand before variable
 Consider what happens when we have long types, function names
 std::string &getName(const std::string& input);
 
-Rule 7 - Variable names matter
-------------------------------
+Rule 7 - Use variable names that imply the type
+-----------------------------------------------
 
-When assighing variable names, consider the follwoing scheme
+When assigning variable names, use variable names that imply the type
 
-* string types end with "Name": firstName, sessionName, displayName.
+* string types end with "Name": firstName, sessionName, displayName, userName, fileName.
 * vector or list types end with plural nouns, or "List": sessions, fileList
-* paths end with he word "path": iniFilePath, configPath
+* map types end with the word "Map": m_paramsMap, m_sessionsMaps
+* paths end with the word "Path": iniFilePath, configPath
 * for-loop variables prefixed with the word "each".  for (const std::string& eachPath in pathList)
-* boolean variables imply true/false relationship: isEnabled, enabled, 
+* boolean variables imply true/false relationship: isEnabled, enabled,
+* all other names imply a class type or object
+
+More examples:
+
+* "session" variable implies  class Session
+* "sessions" or "sessionList" implies std::vector<Session>
+* "sessionNames" implies std::vector<string>
+* "eachSessionName" implies std::string for loop iterator on std::vector<std::string> called sessionNames
+* "configFileName" implies std::string of a single file name (not path), for example 'rules.json'
+* "configPath" implies std::string of an absolute or relative path, for example '/etc/rules.json' or '~/.config/rules.json'
+
 
 Rule - Include a unit of measurement in variable/function names where applicable
 --------------------------------------------------------------------------------
@@ -239,8 +305,8 @@ Good variable names
     long timeoutInMs;
     long startTimeSince1970;
 
-Rule 8 - Beware of shortening variable names
---------------------------------------------
+Rule - Be cautious when shortening variable names
+-------------------------------------------------
 
 :Why:
 
@@ -284,20 +350,13 @@ If you have to write multi macros, be sure to
 * isoloate each macro parameter
 * isolate macro difinition inside a do/while(0) loop
 
+
 Rule - Isolate multi-line macros inside a do/while loop
 -------------------------------------------------------
 
 
 
-Rule - Consider not using preprocssors
---------------------------------------
-
-do while
-brackets
-
-Rule - 
-
-Rule 9 - Consider making 0 value in enum an invalid/unknown/unset/null/none value
+Rule - Consider making 0 value in enum an invalid/unknown/unset/null/none value
 ---------------------------------------------------------------------------------
 
 For example
