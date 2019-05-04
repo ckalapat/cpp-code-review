@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# C++ Code Review documentation build configuration file, created by
+# C++ Coding Rules documentation build configuration file, created by
 # sphinx-quickstart on Mon Mar 18 14:38:49 2019.
 #
 # This file is execfile()d with the current directory set to its
@@ -59,9 +59,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'C++ Code Review'
-copyright = u'2019, Prodigy Programmer'
-author = u'Prodigy Programmer'
+project = u'C++ Coding Rules'
+copyright = u'2019, ckalapat'
+author = u'Midnight Maker'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -127,7 +127,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'CCodeReviewdoc'
+htmlhelp_basename = 'CppCodingRulesdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -154,8 +154,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'CCodeReview.tex', u'C++ Code Review Documentation',
-     u'Prodigy Programmer', 'manual'),
+    (master_doc, 'CppCodingRules.tex', u'C++ Coding Rules Documentation',
+     u'Midnight Maker', 'manual'),
 ]
 
 
@@ -164,7 +164,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ccodereview', u'C++ Code Review Documentation',
+    (master_doc, 'cppcodingrules', u'C++ Coding Rules Documentation',
      [author], 1)
 ]
 
@@ -175,8 +175,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'CCodeReview', u'C++ Code Review Documentation',
-     author, 'CCodeReview', 'One line description of project.',
+    (master_doc, 'CppCodingRules', u'C++ Coding Rules Documentation',
+     author, 'CppCodingRules', 'Battled-hardened rules on writing C++ code.',
      'Miscellaneous'),
 ]
 

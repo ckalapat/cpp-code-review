@@ -1,8 +1,8 @@
-===============
-C++ Code Review
-===============
+================
+C++ Coding Rules
+================
 
-This is book on C++ code reviews.
+This is guide on using C++ coding rules.
 
 Requirements
 ------------
