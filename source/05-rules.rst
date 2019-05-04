@@ -193,8 +193,8 @@ Consider the specific enum format:
     <company><product><module>
 
 
-Rule - Have 'if' statements check for error conditions and throw but never check positive (nominal) conditions
---------------------------------------------------------------------------------------------------------------
+Rule - Conditional 'if' statements should check for error conditions but not nominal conditions
+-----------------------------------------------------------------------------------------------
 
 :Why:
 
@@ -257,8 +257,9 @@ std::string trim(const std::string &input); // ampersand before variable
 Consider what happens when we have long types, function names
 std::string &getName(const std::string& input);
 
-Rule 7 - Use variable names that imply the type
------------------------------------------------
+
+Rule - Use variable names that imply the type
+---------------------------------------------
 
 When assigning variable names, use variable names that imply the type
 
@@ -408,9 +409,11 @@ A better implementation
         kkMaxNumberFlightMode // always the last one
     }
 
-Rule 9 - Leftovers
+Rule - Leftovers
 ------------------
 
 input const reference
 output (writable) by pointer
 always check input validity before function starts
+auto in function param or return type
+templates for types
