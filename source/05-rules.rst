@@ -273,12 +273,12 @@ When assigning variable names, use variable names that imply the type
 
 More examples:
 
-* "session" variable implies  class Session
-* "sessions" or "sessionList" implies std::vector<Session>
-* "sessionNames" implies std::vector<string>
-* "eachSessionName" implies std::string for loop iterator on std::vector<std::string> called sessionNames
-* "configFileName" implies std::string of a single file name (not path), for example 'rules.json'
-* "configPath" implies std::string of an absolute or relative path, for example '/etc/rules.json' or '~/.config/rules.json'
+* "session" variable implies type (`class`) `Session`
+* "sessions" or "sessionList" implies type `std::vector<Session>`
+* "sessionNames" implies type `std::vector<string>`
+* "eachSessionName" implies type `std::string` in a `for` loop iterating `std::vector<std::string> sessionNames`
+* "configFileName" implies `std::string` of a single file name (not path), for example 'rules.json'
+* "configPath" implies `std::string` of an absolute or relative path, for example '/etc/rules.json' or '~/.config/rules.json'
 
 
 Rule - Include a unit of measurement in variable/function names where applicable
